@@ -1,10 +1,9 @@
 // src/server.js
 import { Server } from "miragejs";
-import Books from './JSON/Books.json';
+import books from './json/books.json';
 
 export function makeServer() {
     let server = new Server({
-
 
 
 
@@ -22,11 +21,16 @@ export function makeServer() {
         routes() {
             this.namespace = "api"
 
-            this.get("/books", (schema) => {
-                return Books
+            this.get("/books", () => {
+                return books;
+            })
+            this.post("/add", (schema, request) => {
+                console.log(request)
+                const newBook = JSON.parse(request.requestBody);
+                books.push(newBook);
             })
         },
     })
 
-    return server
+    return server;
 }
